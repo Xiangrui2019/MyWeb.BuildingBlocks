@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Abstracts\DBTools.EntityFramework.Abstract\DBTools.EntityFramework.Abstract.csproj" />
     <ProjectReference Include="..\SeedWork\SeedWork.csproj" />
   </ItemGroup>
 
@@ -14,9 +15,7 @@
 
   <ItemGroup>
     <Folder Include="Models" />
-    <Folder Include="Repositorys" />
     <Folder Include="Tools" />
-    <Folder Include="UnitOfWork" />
   </ItemGroup>
 
 </Project>
