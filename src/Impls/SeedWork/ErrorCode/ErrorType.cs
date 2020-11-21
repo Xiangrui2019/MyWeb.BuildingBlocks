@@ -20,5 +20,8 @@ namespace SeedWork.ErrorCode
         // 未知错误
         public static readonly ErrorType UnknownError
             = new ErrorType(3, "UnknownError");
+        // 找不到资源
+        public static readonly ErrorType NotFound
+            = new ErrorType(4, "NotFound");
     }
 }
