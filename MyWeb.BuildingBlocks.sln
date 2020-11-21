@@ -23,8 +23,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocGenerator.Abstract", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocGenerator", "src\Impls\DocGenerator\DocGenerator.csproj", "{327A2AB6-0A31-4B71-A870-01216E6DF338}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocGenerator.UnitTests", "tests\Impls\DocGenerator.UnitTests\DocGenerator.UnitTests.csproj", "{44047447-1DA4-4413-82C1-8F72AE2189FF}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,10 +53,6 @@ Global
 		{327A2AB6-0A31-4B71-A870-01216E6DF338}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{327A2AB6-0A31-4B71-A870-01216E6DF338}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{327A2AB6-0A31-4B71-A870-01216E6DF338}.Release|Any CPU.Build.0 = Release|Any CPU
-		{44047447-1DA4-4413-82C1-8F72AE2189FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{44047447-1DA4-4413-82C1-8F72AE2189FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{44047447-1DA4-4413-82C1-8F72AE2189FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{44047447-1DA4-4413-82C1-8F72AE2189FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,7 +67,6 @@ Global
 		{7167596B-AF67-4970-9C47-6E513C0CE42D} = {52E9752E-C2DC-4312-84F9-4DEF5CABC624}
 		{C0848611-7795-489B-A912-865EE1F0427A} = {7167596B-AF67-4970-9C47-6E513C0CE42D}
 		{327A2AB6-0A31-4B71-A870-01216E6DF338} = {DE64E6EF-B0AD-4DFC-9148-2DA314C7795B}
-		{44047447-1DA4-4413-82C1-8F72AE2189FF} = {D501608A-4951-4423-B53C-019DB1CA1E16}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {655EA42A-BC96-4E07-83A0-6D43D0230C64}
