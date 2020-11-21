@@ -23,5 +23,8 @@ namespace SeedWork.ErrorCode
         // 找不到资源
         public static readonly ErrorType NotFound
             = new ErrorType(4, "NotFound");
+        // 未授权
+        public static readonly ErrorType Unauthorized
+            = new ErrorType(5, "Unauthorized");
     }
 }
