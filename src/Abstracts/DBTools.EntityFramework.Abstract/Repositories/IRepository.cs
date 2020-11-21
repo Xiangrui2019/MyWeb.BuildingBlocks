@@ -5,14 +5,13 @@ using DBTools.EntityFramework.Abstract.UnitOfWork;
 
 namespace DBTools.EntityFramework.Abstract.Repositories
 {
-    public interface IRepository<TEntity> where TEntity : class
+    public abstract class IRepository<TEntity> where TEntity : class
     {
-        IUnitOfWork UnitOfWork { get; }
-        
+        private IUnitOfWork _unitOfWork;
         /// <summary>
         /// 保存
         /// </summary>
         /// <returns></returns>
-        Task<int> CommitAsync();
+        public abstract Task<int> CommitAsync();
     }
 }
