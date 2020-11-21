@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
 
-namespace Web.Extends
+namespace Web.Extend
 {
     public static class BrowserExtends
     {

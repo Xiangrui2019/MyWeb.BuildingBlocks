@@ -2,7 +2,7 @@
 using SeedWork.ErrorCode;
 using SeedWork.Models.Message;
 
-namespace Web.Extends
+namespace Web.Extend
 {
     public static class ControllerExtends
     {
