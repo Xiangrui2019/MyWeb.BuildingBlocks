@@ -20,13 +20,13 @@ namespace Handler.Services
             return arg;
         }
 
-        internal static MessageModel GetServerExceptionResponse()
+        internal static MessageValue<string> GetServerExceptionResponse(string stackTrace, bool isDev)
         {
             var projectName = System.Reflection.Assembly.GetEntryAssembly()?.GetName().Name;
-            var arg = new MessageModel
+            var arg = new MessageValue<string>(isDev ? stackTrace : "")
             {
                 Code = ErrorType.UnknownError,
-                Message = $"对不起, 这个服务{projectName}发生了崩溃."
+                Message = $"对不起, 这个服务{projectName}发生了崩溃.",
             };
             
             return arg;

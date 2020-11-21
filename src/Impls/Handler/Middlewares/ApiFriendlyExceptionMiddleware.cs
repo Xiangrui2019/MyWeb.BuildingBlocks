@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Handler.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using SeedWork.ErrorCode;
@@ -14,13 +15,16 @@ namespace Handler.Middlewares
     {
         private readonly RequestDelegate _next;
         private readonly ILogger<ApiFriendlyExceptionMiddleware> _logger;
+        private readonly IHostingEnvironment _environment;
 
         public ApiFriendlyExceptionMiddleware(
             RequestDelegate next,
-            ILogger<ApiFriendlyExceptionMiddleware> logger)
+            ILogger<ApiFriendlyExceptionMiddleware> logger, 
+            IHostingEnvironment environment)
         {
             _next = next;
             _logger = logger;
+            _environment = environment;
         }
 
         public async Task Invoke(HttpContext context)
@@ -37,7 +41,8 @@ namespace Handler.Middlewares
                     context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                     context.Response.ContentType = "application/json; charset=utf-8";
                     var message = JsonConvert.SerializeObject(
-                        ReusltGenerator.GetServerExceptionResponse());
+                        ReusltGenerator.GetServerExceptionResponse(
+                            e.StackTrace, _environment.IsDevelopment()));
                     await context.Response.WriteAsync(message, Encoding.UTF8);
                     try
                     {
