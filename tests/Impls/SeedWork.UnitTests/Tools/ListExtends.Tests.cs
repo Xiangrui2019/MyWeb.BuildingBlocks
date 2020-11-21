@@ -11,10 +11,10 @@ namespace SeedWork.UnitTests.Tools
         public void TestShuffle()
         {
             var list = new List<int>(){ 1, 2, 3, 4, 5, 6 };
-            var listSrc = list;
+            var first = list.First();
             list.Shuffle();
             
-            Assert.Equal(list.First(), listSrc.First());
+            Assert.NotEqual(list.First(), first);
         }
     }
 }
