@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace SeedWork.Tools
 {
@@ -220,6 +221,33 @@ namespace SeedWork.Tools
         public static string FilterXSS(this string html)
         {
             return html.Replace("<scripts", "< scripts");
+        }
+        
+        public static string TrimController(this string controllerName)
+        {
+            return controllerName
+                .Replace("Controller", "")
+                .Replace("Api", "API");
+        }
+
+        public static string SplitStringUpperCase(this string source)
+        {
+            string[] split = Regex.Split(source, @"(?<!^)(?=[A-Z])");
+            var b = new StringBuilder();
+            bool first = true;
+            foreach (var word in split)
+            {
+                if (first)
+                {
+                    b.Append(word + " ");
+                    first = false;
+                }
+                else
+                {
+                    b.Append(word.ToLower() + " ");
+                }
+            }
+            return b.ToString();
         }
     }
 }

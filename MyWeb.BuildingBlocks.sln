@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Handler", "src\Impls\Handle
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Handler.UnitTests", "tests\Impls\Handler.UnitTests\Handler.UnitTests.csproj", "{9D005E96-0588-4FC1-8F79-AB922D3F2972}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Abstracts", "Abstracts", "{7167596B-AF67-4970-9C47-6E513C0CE42D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocGenerator.Abstract", "src\Abstracts\DocGenerator.Abstract\DocGenerator.Abstract.csproj", "{C0848611-7795-489B-A912-865EE1F0427A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,10 @@ Global
 		{9D005E96-0588-4FC1-8F79-AB922D3F2972}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D005E96-0588-4FC1-8F79-AB922D3F2972}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D005E96-0588-4FC1-8F79-AB922D3F2972}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0848611-7795-489B-A912-865EE1F0427A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0848611-7795-489B-A912-865EE1F0427A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0848611-7795-489B-A912-865EE1F0427A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0848611-7795-489B-A912-865EE1F0427A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +58,8 @@ Global
 		{36B55B27-A163-435E-850B-7B3D6C4D08D2} = {D501608A-4951-4423-B53C-019DB1CA1E16}
 		{8D7B75C4-C1BC-476D-84B8-FE4177E23052} = {DE64E6EF-B0AD-4DFC-9148-2DA314C7795B}
 		{9D005E96-0588-4FC1-8F79-AB922D3F2972} = {D501608A-4951-4423-B53C-019DB1CA1E16}
+		{7167596B-AF67-4970-9C47-6E513C0CE42D} = {52E9752E-C2DC-4312-84F9-4DEF5CABC624}
+		{C0848611-7795-489B-A912-865EE1F0427A} = {7167596B-AF67-4970-9C47-6E513C0CE42D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {655EA42A-BC96-4E07-83A0-6D43D0230C64}
