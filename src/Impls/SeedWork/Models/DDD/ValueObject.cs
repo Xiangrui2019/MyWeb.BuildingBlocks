@@ -34,7 +34,6 @@ namespace SeedWork.Models.DDD
             }
 
             return !thisValues.MoveNext() && !otherValues.MoveNext();
-
         }
 
         public override int GetHashCode()
@@ -47,6 +46,19 @@ namespace SeedWork.Models.DDD
         public ValueObject GetCopy()
         {
             return this.MemberwiseClone() as ValueObject;
+        }
+        
+        public static bool operator ==(ValueObject left, ValueObject right)
+        {
+            if (Object.Equals(left, null))
+                return Object.Equals(right, null) ? true : false;
+            else
+                return left.Equals(right);
+        }
+
+        public static bool operator !=(ValueObject left, ValueObject right)
+        { 
+            return !(left == right);
         }
     }
 }

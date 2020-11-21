@@ -1,9 +1,10 @@
-﻿using SeedWork.Models.Base;
+﻿using System;
+using SeedWork.Models.Base;
 
 namespace SeedWork.ErrorCode
 {
     public class ErrorType : Enumeration
-    {
+    { 
         public ErrorType(int id, string name)
             : base(id, name)
         {
