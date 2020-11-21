@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SeedWork.Models.Message
+namespace SeedWork.ErrorCode
 {
     public class ErrorType : Enumeration
     {
