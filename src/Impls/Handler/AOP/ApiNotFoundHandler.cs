@@ -12,6 +12,7 @@ namespace Handler.AOP
         {
             if (context.HttpContext.Response.StatusCode == StatusCodes.Status404NotFound)
             {
+                context.HttpContext.Response.StatusCode = StatusCodes.Status404NotFound;
                 context.Result = new JsonResult(new MessageModel
                 {
                     Code = ErrorType.NotFound,

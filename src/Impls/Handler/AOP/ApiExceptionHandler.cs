@@ -1,5 +1,5 @@
 ﻿using Handler.Exceptions;
-using Handler.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using SeedWork.Models.Message;
@@ -16,6 +16,7 @@ namespace Handler.AOP
             {
                 case UnexpectedException exp:
                     context.ExceptionHandled = true;
+                    context.HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
                     context.Result = new JsonResult(new MessageModel
                     {
                         Code = exp.Code,
@@ -24,16 +25,12 @@ namespace Handler.AOP
                     break;
                 case ApiModelException exp:
                     context.ExceptionHandled = true;
+                    context.HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
                     context.Result = new JsonResult(new MessageModel
                     {
                         Code = exp.Code,
                         Message = exp.Message
                     });
-                    break;
-                default:
-                    context.ExceptionHandled = true;
-                    context.Result = new JsonResult(
-                        ReusltGenerator.GetServerExceptionResponse());
                     break;
             }
         }
