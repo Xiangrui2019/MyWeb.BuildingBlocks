@@ -15,5 +15,8 @@ namespace SeedWork.Models.Message
         }
 
         // 错误码
+        // 成功
+        public static readonly ErrorType Success
+            = new ErrorType(1, "Success");
     }
 }
