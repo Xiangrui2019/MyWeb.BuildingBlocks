@@ -7,19 +7,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Polly;
+using SeedWork.Tools;
 
 namespace DBTools.EntityFramework
 {
     public static class Extends
     {
         // 自动迁移数据库
-        public static bool IsInKubernetes(this IHost webHost)
-        {
-            var cfg = webHost.Services.GetService<IConfiguration>();
-            var orchestratorType = cfg.GetValue<string>("OrchestratorType");
-            return orchestratorType?.ToUpper() == "K8S";
-        }
-        
         public static IHost MigrateDbContext<TContext>(this IHost webHost, Action<TContext, IServiceProvider> seeder) where TContext : DbContext
         {
             var underK8s = webHost.IsInKubernetes();
