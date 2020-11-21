@@ -8,6 +8,8 @@ namespace SeedWork
         public static IServiceCollection AddCannon(this IServiceCollection services)
         {
             services.AddSingleton<CannonService>();
+
+            return services;
         }
     }
 }
