@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Abstracts\Handler.Abstract\Handler.Abstract.csproj" />
     <ProjectReference Include="..\SeedWork\SeedWork.csproj" />
   </ItemGroup>
 

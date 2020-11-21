@@ -2,6 +2,7 @@
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Handler.Abstract.Interfaces;
 using Handler.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
@@ -16,15 +17,18 @@ namespace Handler.Middlewares
         private readonly RequestDelegate _next;
         private readonly ILogger<ApiFriendlyExceptionMiddleware> _logger;
         private readonly IHostingEnvironment _environment;
+        private readonly IReporter _reporter;
 
         public ApiFriendlyExceptionMiddleware(
             RequestDelegate next,
             ILogger<ApiFriendlyExceptionMiddleware> logger, 
-            IHostingEnvironment environment)
+            IHostingEnvironment environment,
+            IReporter reporter)
         {
             _next = next;
             _logger = logger;
             _environment = environment;
+            _reporter = reporter;
         }
 
         public async Task Invoke(HttpContext context)
@@ -47,6 +51,9 @@ namespace Handler.Middlewares
                     try
                     {
                         _logger.LogError(e, e.Message);
+                        
+                        // 通过报告器报告给日志系统异常.
+                        await _reporter.ReportAsync(context.Request.Path, e);
                     }
                     catch
                     {
