@@ -4,15 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Aiursoft.DocGenerator.Middlewares;
 using DocGenerator.Abstract.Attributes;
 
-namespace DocGenerator.Services
+namespace DocGenerator
 {
-    public enum DocFormat
-    {
-        Json,
-        Markdown
-    }
     public class APIDocGeneratorSettings
     {
         public Func<MethodInfo, Type, bool> IsAPIAction { get; set; } = (action, controller) =>
@@ -32,9 +28,9 @@ namespace DocGenerator.Services
         public DocFormat Format = DocFormat.Json;
         public string DocAddress = "doc";
     }
-    public static class ServiceCollectionExtends
+    public static class Extends
     {
-        public static IApplicationBuilder UseAiursoftDocGenerator(
+        public static IApplicationBuilder UseDocGenerator(
             this IApplicationBuilder app,
             Action<APIDocGeneratorSettings> options = null)
         {

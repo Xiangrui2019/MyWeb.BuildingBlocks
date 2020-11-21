@@ -1,7 +1,4 @@
-﻿using Aiursoft.DocGenerator.Attributes;
-using Aiursoft.DocGenerator.Services;
-using Aiursoft.DocGenerator.Tools;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
@@ -12,6 +9,10 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using DocGenerator;
+using DocGenerator.Abstract.Attributes;
+using DocGenerator.Services;
+using SeedWork.Tools;
 
 namespace Aiursoft.DocGenerator.Middlewares
 {
@@ -254,5 +255,11 @@ namespace Aiursoft.DocGenerator.Middlewares
         Datetime = 3,
         Collection = 4,
         Unknown = 5
+    }
+    
+    public enum DocFormat
+    {
+        Json,
+        Markdown
     }
 }

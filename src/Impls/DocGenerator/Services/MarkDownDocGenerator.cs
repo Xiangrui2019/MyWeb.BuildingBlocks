@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Aiursoft.DocGenerator.Middlewares;
+using SeedWork.Tools;
 
 namespace DocGenerator.Services
 {
