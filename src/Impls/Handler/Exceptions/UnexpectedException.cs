@@ -12,7 +12,7 @@ namespace Handler.Exceptions
 
         public UnexpectedException(MessageModel model) : base(model.Message)
         {
-            Response = Response;
+            Response = model;
         }
     }
 }
