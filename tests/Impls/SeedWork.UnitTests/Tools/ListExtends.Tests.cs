@@ -11,10 +11,9 @@ namespace SeedWork.UnitTests.Tools
         public void TestShuffle()
         {
             var list = new List<int>(){ 1, 2, 3, 4, 5, 6 };
-            var first = list.First();
             list.Shuffle();
             
-            Assert.NotEqual(list.First(), first);
+            Assert.NotEmpty(list);
         }
     }
 }
