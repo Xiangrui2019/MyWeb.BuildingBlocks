@@ -6,6 +6,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Abstracts\Handler.Abstract\Handler.Abstract.csproj" />
+    <ProjectReference Include="..\SeedWork\SeedWork.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="AOP" />
+    <Folder Include="Middlewares" />
+    <Folder Include="Services" />
   </ItemGroup>
 
 </Project>
