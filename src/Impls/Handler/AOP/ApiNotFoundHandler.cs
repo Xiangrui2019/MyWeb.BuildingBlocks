@@ -10,7 +10,8 @@ namespace Handler.AOP
     {
         public override void OnActionExecuted(ActionExecutedContext context)
         {
-            if (context.HttpContext.Response.StatusCode == StatusCodes.Status404NotFound)
+            if (context.HttpContext.Response.StatusCode == StatusCodes.Status404NotFound
+                && !context.HttpContext.Response.HasStarted)
             {
                 context.HttpContext.Response.StatusCode = StatusCodes.Status404NotFound;
                 context.Result = new JsonResult(new MessageModel
