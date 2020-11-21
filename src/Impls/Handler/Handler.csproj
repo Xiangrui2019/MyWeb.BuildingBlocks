@@ -5,14 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Json" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Abstracts\Handler.Abstract\Handler.Abstract.csproj" />
     <ProjectReference Include="..\SeedWork\SeedWork.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="AOP" />
     <Folder Include="Middlewares" />
-    <Folder Include="Services" />
   </ItemGroup>
 
 </Project>
