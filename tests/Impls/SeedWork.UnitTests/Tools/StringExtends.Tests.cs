@@ -68,5 +68,15 @@ namespace SeedWork.UnitTests.Tools
             
             Assert.NotEmpty(dst);
         }
+
+        [Fact]
+        public void TestFilterXSS()
+        {
+            var src = "<scripts>test</scripts>";
+            var match = "< scripts>test</scripts>";
+            var dst = src.FilterXSS();
+            
+            Assert.Equal(dst, match);
+        }
     }
 }

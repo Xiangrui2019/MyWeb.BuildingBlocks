@@ -216,5 +216,10 @@ namespace SeedWork.Tools
             }
             return $"{size:0.##} {sizes[order]}";
         }
+
+        public static string FilterXSS(this string html)
+        {
+            return html.Replace("<scripts", "< scripts");
+        }
     }
 }
