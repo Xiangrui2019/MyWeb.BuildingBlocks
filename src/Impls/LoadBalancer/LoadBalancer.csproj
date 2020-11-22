@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Abstracts\LoadBalancer.Abstract\LoadBalancer.Abstract.csproj" />
+    <ProjectReference Include="..\SeedWork\SeedWork.csproj" />
   </ItemGroup>
 
 </Project>
