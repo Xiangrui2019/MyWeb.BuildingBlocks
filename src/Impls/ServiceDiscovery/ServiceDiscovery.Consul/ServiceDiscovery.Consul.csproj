@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <PackageReference Include="Consul" Version="1.6.1.1" />
-    <PackageReference Include="DnsClient" Version="1.3.2" />
   </ItemGroup>
 
 </Project>

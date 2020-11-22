@@ -3,22 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using ServiceDiscoveryWebApp;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ServiceDiscovery.FunctionalTests
 {
     public class ServiceReslover_Tests : IDisposable
     {
+        private readonly ITestOutputHelper _testOutputHelper;
         private readonly IHost _server;
         private readonly HttpClient _client;
 
-        public ServiceReslover_Tests()
+        public ServiceReslover_Tests(ITestOutputHelper testOutputHelper)
         {
+            _testOutputHelper = testOutputHelper;
             _server = Host.CreateDefaultBuilder(new string[0])
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
@@ -33,14 +38,13 @@ namespace ServiceDiscovery.FunctionalTests
         }
 
         [Fact]
-        public async Task TestServiceReslover()
+        public async Task Test()
         {
-            var result = await _client.GetAsync("http://localhost:15000/Test/Reslover");
-            var message = JsonConvert.DeserializeObject<List<string>>(
-                result.Content.ReadAsStringAsync().Result);
+            Thread.Sleep(80000);
             
-            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
-            Assert.Equal("A", message.First());
+            var result = await _client.GetAsync("http://localhost:15000/test/test");
+
+            Assert.Equal("1", await result.Content.ReadAsStringAsync());
         }
 
         public void Dispose()

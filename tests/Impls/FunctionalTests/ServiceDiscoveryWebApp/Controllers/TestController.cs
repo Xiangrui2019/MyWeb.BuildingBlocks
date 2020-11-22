@@ -15,11 +15,10 @@ namespace ServiceDiscoveryWebApp.Controllers
             _reslover = reslover;
         }
 
-        public async Task<IActionResult> Reslover()
+        public async Task<IActionResult> Test()
         {
-            var urls = await _reslover.ResloveServiceAsync("Blog.Module", "CommentService");
-            
-            return Json(urls);
+            var services = await _reslover.ResloveServiceAsync("Test.Module", "TestService");
+            return Json(services.Count);
         }
     }
 }

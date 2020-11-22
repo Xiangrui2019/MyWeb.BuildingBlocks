@@ -1,20 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Consul;
-using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using ServiceDiscovery.Abstract.Interfaces;
-using ServiceDiscovery.Consul.Models;
 
 namespace ServiceDiscovery.Consul.Services
 {
     public class ConsulServiceRegistor : IServiceRegistor
     {
-        private readonly IOptions<ServiceDiscoveryOptions> _discoveryOptions;
-        private readonly ILoggerFactory _loggerFactory;
+        private readonly IConfiguration _configuration;
         private readonly IHostApplicationLifetime _lifetime;
         private readonly IConsulClient _client;
         private readonly ILogger<ConsulServiceRegistor> _logger;
@@ -22,16 +18,14 @@ namespace ServiceDiscovery.Consul.Services
         private readonly IHostEnvironment _environment;
 
         public ConsulServiceRegistor(
-            IOptions<ServiceDiscoveryOptions> discoveryOptions,
-            ILoggerFactory loggerFactory,
+            IConfiguration configuration,
             IHostApplicationLifetime lifetime,
             IConsulClient client,
             ILogger<ConsulServiceRegistor> logger,
             IServiceEndpointsGetter endpointsGetter,
             IHostEnvironment environment)
         {
-            _discoveryOptions = discoveryOptions;
-            _loggerFactory = loggerFactory;
+            _configuration = configuration;
             _lifetime = lifetime;
             _client = client;
             _logger = logger;
@@ -41,10 +35,10 @@ namespace ServiceDiscovery.Consul.Services
         
         public async Task RegisterServiceAsync()
         {
-            if (string.IsNullOrWhiteSpace(_discoveryOptions.Value.ModuleName)
-                || string.IsNullOrWhiteSpace(_discoveryOptions.Value.ServiceName))
+            if (string.IsNullOrWhiteSpace(_configuration["ServiceDiscoveryOptions:ServiceName"])
+                || string.IsNullOrWhiteSpace(_configuration["ServiceDiscoveryOptions:ModuleName"]))
             {
-                throw new ArgumentException("Service Name must be configured", _discoveryOptions.Value.ServiceName);
+                throw new ArgumentException("Service Name must be configured", _configuration["ServiceDiscoveryOptions:ServiceName"]);
             }
 
             var endpoints = await _endpointsGetter.GetLocalServiceEndpointsAsync();
@@ -53,15 +47,15 @@ namespace ServiceDiscovery.Consul.Services
             {
                 var url = new Uri(endpoint);
                 var serviceId = 
-                    $"{_discoveryOptions.Value.ModuleName}_{_discoveryOptions.Value.ServiceName}_{url.Host}:{url.Port}";
+                    $"{_configuration["ServiceDiscoveryOptions:ModuleName"]}_{_configuration["ServiceDiscoveryOptions:ServiceName"]}_{url.Host}:{url.Port}";
                 
                 _logger.LogInformation($"Registering service {serviceId} for address {url}.");
                 
                 var serviceCheck =  new AgentServiceCheck()
                 {
-                    DeregisterCriticalServiceAfter = TimeSpan.FromMinutes(1),
+                    DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(15),
                     Interval = TimeSpan.FromSeconds(30),
-                    HTTP = new Uri(url, _discoveryOptions.Value.HealthCheckTemplate).OriginalString
+                    HTTP = new Uri(url, _configuration["ServiceDiscoveryOptions:HealthCheckTemplate"]).OriginalString
                 };
                 if (_environment.IsDevelopment())
                 {
@@ -74,7 +68,7 @@ namespace ServiceDiscovery.Consul.Services
                     Check = serviceCheck,
                     Address = url.Host,
                     ID = serviceId,
-                    Name = $"{_discoveryOptions.Value.ModuleName}.{_discoveryOptions.Value.ServiceName}",
+                    Name = $"{_configuration["ServiceDiscoveryOptions:ModuleName"]}.{_configuration["ServiceDiscoveryOptions:ServiceName"]}",
                     Port = url.Port
                 };
 
@@ -84,8 +78,6 @@ namespace ServiceDiscovery.Consul.Services
                     _client.Agent.ServiceDeregister(registation.ID).GetAwaiter().GetResult();
                 });
             }
-            
-            
         }
     }
 }

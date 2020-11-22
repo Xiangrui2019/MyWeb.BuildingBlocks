@@ -9,9 +9,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using ServiceDiscovery.Abstract.Interfaces;
+using ServiceDiscovery;
+using ServiceDiscovery.Consul;
+using ServiceDiscovery.Consul.Services;
 using ServiceDiscoveryWebApp.Mocks;
 
 namespace ServiceDiscoveryWebApp
@@ -28,8 +29,10 @@ namespace ServiceDiscoveryWebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IServiceReslover, MockServiceReslover>();
-            
+            services.AddConsul();
+            services.AddServiceRegistorService<MockIP, ConsulServiceRegistor>();
+            services.AddServiceResloverService<ConsulServiceReslover>();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -47,8 +50,6 @@ namespace ServiceDiscoveryWebApp
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ServiceDiscoveryWebApp v1"));
             }
 
-            app.UseHttpsRedirection();
-
             app.UseRouting();
 
             app.UseAuthorization();
@@ -57,6 +58,8 @@ namespace ServiceDiscoveryWebApp
             {
                 endpoints.MapControllers();
             });
+
+            app.UseServiceRegister();
         }
     }
 }
