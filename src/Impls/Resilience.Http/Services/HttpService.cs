@@ -21,12 +21,8 @@ namespace Resilience.Http.Services
             _httpClient = clientFactory.CreateClient();
             _regex = new Regex("^https://", RegexOptions.Compiled);
         }
-        
-        public string Get(HttpUrl url, bool forceHttp = false)
-        {
-            return GetAsync(url, forceHttp).Result;
-        }
 
+        
         public async Task<string> GetAsync(HttpUrl url, bool forceHttp = false)
         {
             if (forceHttp && !url.IsLocalhost())
@@ -48,18 +44,17 @@ namespace Resilience.Http.Services
                 throw new WebException($"The remote server returned unexpected status code: {response.StatusCode} - {response.ReasonPhrase}.");
             }
         }
-
-        public T GetToJson<T>(HttpUrl url, bool forceHttp = false)
-        {
-            return GetToJsonAsync<T>(url, forceHttp).Result;
-        }
-
+        
         public async Task<T> GetToJsonAsync<T>(HttpUrl url, bool forceHttp = false)
         {
             var response = await GetAsync(url, forceHttp);
 
             return JsonConvert.DeserializeObject<T>(response);
         }
+        
+        public string Get(HttpUrl url, bool forceHttp = false) => GetAsync(url, forceHttp).Result;
+
+        public T GetToJson<T>(HttpUrl url, bool forceHttp = false) => GetToJsonAsync<T>(url, forceHttp).Result;
 
         public string PostForm(HttpUrl url, HttpUrl postData, bool forceHttp = false)
         {
