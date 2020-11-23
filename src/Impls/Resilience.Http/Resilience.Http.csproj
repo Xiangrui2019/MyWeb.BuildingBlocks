@@ -5,8 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Abstracts\Resilience.Http.Abstract\Resilience.Http.Abstract.csproj" />
     <ProjectReference Include="..\SeedWork\SeedWork.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.0" />
   </ItemGroup>
 
 </Project>

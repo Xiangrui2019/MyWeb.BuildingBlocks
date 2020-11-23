@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
 using Resilience.Http.Interfaces;
 using Resilience.Http.Models;
 
@@ -6,6 +7,13 @@ namespace Resilience.Http.Services
 {
     public class HttpService : IHttpService
     {
+        private readonly HttpClient _httpClient;
+        
+        public HttpService(IHttpClientFactory clientFactory)
+        {
+            _httpClient = clientFactory.CreateClient();
+        }
+        
         public string Get(HttpUrl url, bool forceHttp = false)
         {
             throw new System.NotImplementedException();
