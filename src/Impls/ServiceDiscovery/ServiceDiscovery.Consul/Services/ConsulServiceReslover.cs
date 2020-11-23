@@ -23,7 +23,7 @@ namespace ServiceDiscovery.Consul.Services
             _client = client;
             _logger = logger;
             SyncConsul(null, null);
-            _timer = new Timer(5000);
+            _timer = new Timer(10000);
             _timer.Elapsed += new ElapsedEventHandler(SyncConsul);
             _timer.Start();
         }
