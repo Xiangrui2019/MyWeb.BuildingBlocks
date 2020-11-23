@@ -9,7 +9,7 @@ namespace Resilience.Http.Interfaces
         string Get(HttpUrl url, bool forceHttp = false);
         Task<string> GetAsync(HttpUrl url, bool forceHttp = false);
         T GetToJson<T>(HttpUrl url, bool forceHttp = false);
-        Task<T> GetJsonToAsync<T>(HttpUrl url, bool forceHttp = false);
+        Task<T> GetToJsonAsync<T>(HttpUrl url, bool forceHttp = false);
         
         // Post请求
         string PostForm(HttpUrl url, HttpUrl postData, bool forceHttp = false);

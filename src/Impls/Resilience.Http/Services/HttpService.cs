@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Resilience.Http.Interfaces;
 using Resilience.Http.Models;
 
@@ -23,7 +24,7 @@ namespace Resilience.Http.Services
         
         public string Get(HttpUrl url, bool forceHttp = false)
         {
-            
+            return GetAsync(url, forceHttp).Result;
         }
 
         public async Task<string> GetAsync(HttpUrl url, bool forceHttp = false)
@@ -50,12 +51,14 @@ namespace Resilience.Http.Services
 
         public T GetToJson<T>(HttpUrl url, bool forceHttp = false)
         {
-            throw new System.NotImplementedException();
+            return GetToJsonAsync<T>(url, forceHttp).Result;
         }
 
-        public Task<T> GetJsonToAsync<T>(HttpUrl url, bool forceHttp = false)
+        public async Task<T> GetToJsonAsync<T>(HttpUrl url, bool forceHttp = false)
         {
-            throw new System.NotImplementedException();
+            var response = await GetAsync(url, forceHttp);
+
+            return JsonConvert.DeserializeObject<T>(response);
         }
 
         public string PostForm(HttpUrl url, HttpUrl postData, bool forceHttp = false)
