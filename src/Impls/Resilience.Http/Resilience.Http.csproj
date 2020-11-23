@@ -6,6 +6,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Abstracts\Resilience.Http.Abstract\Resilience.Http.Abstract.csproj" />
+    <ProjectReference Include="..\SeedWork\SeedWork.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services" />
   </ItemGroup>
 
 </Project>
