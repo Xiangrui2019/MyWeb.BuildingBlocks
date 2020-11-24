@@ -2,7 +2,7 @@
 
 namespace ServiceDiscovery.Abstract.Interfaces
 {
-    public interface IServiceRegistor
+    public interface IServiceRegister
     {
         Task RegisterServiceAsync();
     }

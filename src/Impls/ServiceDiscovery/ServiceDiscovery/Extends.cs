@@ -14,18 +14,18 @@ namespace ServiceDiscovery
         }
 
         public static IServiceCollection AddServiceRegistorService<TEndpointsGetter, TRegistor>(this IServiceCollection services)
-            where TRegistor : class, IServiceRegistor 
+            where TRegistor : class, IServiceRegister 
             where TEndpointsGetter : class, IServiceEndpointsGetter
         {
             services.AddSingleton<IServiceEndpointsGetter, TEndpointsGetter>();
-            services.AddSingleton<IServiceRegistor, TRegistor>();
+            services.AddSingleton<IServiceRegister, TRegistor>();
             
             return services;
         }
 
         public static IApplicationBuilder UseServiceRegister(this IApplicationBuilder app)
         {
-            var registorService = app.ApplicationServices.GetService<IServiceRegistor>();
+            var registorService = app.ApplicationServices.GetService<IServiceRegister>();
             registorService.RegisterServiceAsync().GetAwaiter().GetResult();
             
             return app;

@@ -8,20 +8,20 @@ using ServiceDiscovery.Abstract.Interfaces;
 
 namespace ServiceDiscovery.Consul.Services
 {
-    public class ConsulServiceRegistor : IServiceRegistor
+    public class ConsulServiceRegister : IServiceRegister
     {
         private readonly IConfiguration _configuration;
         private readonly IHostApplicationLifetime _lifetime;
         private readonly IConsulClient _client;
-        private readonly ILogger<ConsulServiceRegistor> _logger;
+        private readonly ILogger<ConsulServiceRegister> _logger;
         private readonly IServiceEndpointsGetter _endpointsGetter;
         private readonly IHostEnvironment _environment;
 
-        public ConsulServiceRegistor(
+        public ConsulServiceRegister(
             IConfiguration configuration,
             IHostApplicationLifetime lifetime,
             IConsulClient client,
-            ILogger<ConsulServiceRegistor> logger,
+            ILogger<ConsulServiceRegister> logger,
             IServiceEndpointsGetter endpointsGetter,
             IHostEnvironment environment)
         {

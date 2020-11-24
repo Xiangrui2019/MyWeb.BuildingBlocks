@@ -30,7 +30,7 @@ namespace ServiceDiscoveryWebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddConsul();
-            services.AddServiceRegistorService<MockIP, ConsulServiceRegistor>();
+            services.AddServiceRegistorService<MockIP, ConsulServiceRegister>();
             services.AddServiceResloverService<ConsulServiceReslover>();
 
             services.AddControllers();
