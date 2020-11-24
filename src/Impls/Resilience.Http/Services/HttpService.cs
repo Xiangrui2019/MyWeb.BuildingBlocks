@@ -52,29 +52,47 @@ namespace Resilience.Http.Services
             return JsonConvert.DeserializeObject<T>(response);
         }
         
-        public string Get(HttpUrl url, bool forceHttp = false) => GetAsync(url, forceHttp).Result;
+        public string Get(HttpUrl url, bool forceHttp = false) 
+            => GetAsync(url, forceHttp).Result;
 
-        public T GetToJson<T>(HttpUrl url, bool forceHttp = false) => GetToJsonAsync<T>(url, forceHttp).Result;
-
-        public string PostForm(HttpUrl url, HttpUrl postData, bool forceHttp = false)
+        public T GetToJson<T>(HttpUrl url, bool forceHttp = false) 
+            => GetToJsonAsync<T>(url, forceHttp).Result;
+    
+        public async Task<string> PostFormAsync(HttpUrl url, HttpUrl postData, bool forceHttp = false)
         {
-            throw new System.NotImplementedException();
-        }
+            if (forceHttp && !url.IsLocalhost())
+            {
+                url.Address = _regex.Replace(url.Address, "http://");
+            }
 
-        public Task<string> PostFormAsync(HttpUrl url, HttpUrl postData, bool forceHttp = false)
-        {
-            throw new System.NotImplementedException();
-        }
+            var response = await HttpInvokeAsync(
+                HttpMethod.Post,
+                url.ToString(),
+                new FormUrlEncodedContent(postData.Params));
 
-        public T PostFormToJson<T>(HttpUrl url, HttpUrl postData, bool forceHttp = false)
-        {
-            throw new System.NotImplementedException();
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsStringAsync();
+            }
+            else
+            {
+                throw new WebException($"The remote server returned unexpected status code: {response.StatusCode} - {response.ReasonPhrase}.");
+            }
         }
+        
+        public async Task<T> PostFormToJsonAsync<T>(HttpUrl url, HttpUrl postData, bool forceHttp = false)
+        {
+            var response = await PostFormAsync(url, postData, forceHttp);
 
-        public Task<T> PostFormToJsonAsync<T>(HttpUrl url, HttpUrl postData, bool forceHttp = false)
-        {
-            throw new System.NotImplementedException();
+            return JsonConvert.DeserializeObject<T>(response);
         }
+        
+        public string PostForm(HttpUrl url, HttpUrl postData, bool forceHttp = false) 
+            => PostFormAsync(url, postData, forceHttp).Result;
+
+        public T PostFormToJson<T>(HttpUrl url, HttpUrl postData, bool forceHttp = false) =>
+            PostFormToJsonAsync<T>(url, postData, forceHttp).Result;
+
 
         public string PostJson(HttpUrl url, HttpUrl postData, bool forceHttp = false)
         {
