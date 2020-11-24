@@ -23,12 +23,12 @@ namespace ServiceDiscovery.Consul.Services
             _client = client;
             _logger = logger;
             SyncConsul(null, null);
-            _timer = new Timer(10000);
+            _timer = new Timer(30000);
             _timer.Elapsed += new ElapsedEventHandler(SyncConsul);
             _timer.Start();
         }
 
-        private void SyncConsul(object source, System.Timers.ElapsedEventArgs e)
+        private void SyncConsul(object source, ElapsedEventArgs e)
         {
             _logger.LogInformation("Syncing Services from Consul Agent.");
             _services = _client.Agent.Services().Result.Response;
