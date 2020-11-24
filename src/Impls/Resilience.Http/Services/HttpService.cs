@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -94,24 +95,43 @@ namespace Resilience.Http.Services
             PostFormToJsonAsync<T>(url, postData, forceHttp).Result;
 
 
-        public string PostJson(HttpUrl url, HttpUrl postData, bool forceHttp = false)
+        public string PostJson(HttpUrl url, HttpUrl postData, bool forceHttp = false) =>
+            PostJsonAsync(url, postData, forceHttp).Result;
+
+        public async Task<string> PostJsonAsync(HttpUrl url, HttpUrl postData, bool forceHttp = false)
         {
-            throw new System.NotImplementedException();
+            if (forceHttp && !url.IsLocalhost())
+            {
+                url.Address = _regex.Replace(url.Address, "http://");
+            }
+            
+            var headers = new Dictionary<string, string>();
+            headers.Add("content-type", "application/json");
+
+            var response = await HttpInvokeAsync(
+                HttpMethod.Post,
+                url.ToString(),
+                new StringContent(JsonConvert.SerializeObject(postData.Params)),
+                headers);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsStringAsync();
+            }
+            else
+            {
+                throw new WebException($"The remote server returned unexpected status code: {response.StatusCode} - {response.ReasonPhrase}.");
+            }
         }
 
-        public Task<string> PostJsonAsync(HttpUrl url, HttpUrl postData, bool forceHttp = false)
-        {
-            throw new System.NotImplementedException();
-        }
+        public T PostJsonToJson<T>(HttpUrl url, HttpUrl postData, bool forceHttp = false) 
+            => PostJsonToJsonAsync<T>(url, postData, forceHttp).Result;
 
-        public T PostJsonToJson<T>(HttpUrl url, HttpUrl postData, bool forceHttp = false)
+        public async Task<T> PostJsonToJsonAsync<T>(HttpUrl url, HttpUrl postData, bool forceHttp = false)
         {
-            throw new System.NotImplementedException();
-        }
+            var response = await PostJsonAsync(url, postData, forceHttp);
 
-        public Task<T> PostJsonToJsonAsync<T>(HttpUrl url, HttpUrl postData, bool forceHttp = false)
-        {
-            throw new System.NotImplementedException();
+            return JsonConvert.DeserializeObject<T>(response);
         }
 
         public string PutJson(HttpUrl url, HttpUrl postData, bool forceHttp = false)
@@ -157,13 +177,22 @@ namespace Resilience.Http.Services
         private async Task<HttpResponseMessage> HttpInvokeAsync(
             HttpMethod method,
             string url,
-            HttpContent content)
+            HttpContent content,
+            Dictionary<string, string> headers = null)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, url.ToString())
             {
                 Content = content,
             };
             request.Headers.Add("accept", "application/json, text/html");
+
+            if (headers != null)
+            {
+                foreach (var header in headers.ToList())
+                {
+                    request.Headers.Add(header.Key, header.Value);
+                }
+            }
 
             using var response = await _httpClient.SendAsync(request);
 
